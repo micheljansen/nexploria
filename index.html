@@ -75,6 +75,19 @@
           font-size: 14px;
         }
 
+        .img-wrapper {
+          position: relative;
+        }
+
+        .price {
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          color: white;
+          padding: 4px 10px;
+          background-color: rgba(0,0,0,0.4);
+        }
+
         .not-transposed {
           -webkit-transform: rotateZ(0deg);
         }
@@ -206,7 +219,10 @@
 
             _(cat.listings).each(function(listing) {
               $column.append("<div class='listing'>"+
+                "<div class='img-wrapper'>"+
                 "<img src='"+listing.image_url+"'/>"+
+                "<span class='price'>"+listing.price+"</span>"+
+                "</div>"+
                 "<h2>"+listing.title+"</h2>"+
                 "</div>"
               )
