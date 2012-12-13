@@ -6,11 +6,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="lib/hammer.js"></script>
     <script src="lib/jquery.specialevent.hammer.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
     <style>
         #content {
           height: 100%;
-          text-align: center;
-          font-size: 3em;
           width: 100%;
           background: white;
           font-family: Helvetica, sans-serif;
@@ -34,17 +33,46 @@
           padding-left: 40px;
         }
 
-        .dummy-data td {
-          width: 300px;
-          height: 300px;
-          background: #ffe;
+        #category_axis {
+          white-space: nowrap;
+          margin-left: 100px;
         }
-        .dummy-data th {
+        .cat {
+          text-align: center;
+          display: inline-block;
           background: #332;
-          color: white;
           line-height: 2em;
+          color: white;
+          width: 200px;
         }
 
+        #columns {
+          white-space: nowrap;
+          margin-left: 100px;
+          background-color: #bbb;
+        }
+
+        .col {
+          width: 200px;
+          overflow: hidden;
+          display: inline-block;
+        }
+
+        .listing {
+          box-sizing: border-box;
+          white-space: normal;
+          width: 100%;
+          height: 200px;
+          padding: 20px;
+          overflow: hidden;
+          background: white;
+        }
+
+
+        .listing h2 {
+          margin: 0;
+          font-size: 14px;
+        }
 
         .not-transposed {
           -webkit-transform: rotateZ(0deg);
@@ -61,15 +89,8 @@
 <body>
     <div id="container">
       <div id="content">
-        <table class="dummy-data">
-          <tr>
-            <th>date/price</th><th>&lt;100</th><th>&lt;150</th><th>&lt;200</th><th>&lt;250</th><th>&lt;300</th><th>&lt;350</th><th>&lt;400</th><th>&lt;450</th><th>&lt;500</th>
-          </tr>
-          <tr><th></th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-          <tr><th></th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-          <tr><th></th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-          <tr><th></th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-        </table>
+        <div id="category_axis"></div>
+        <div id="columns"></div>
       </div>
     </div>
     <div id="output">
@@ -77,6 +98,12 @@
     <script>
         var is_transforming = false;
         var last_rotation = 0;
+
+        var category_axis = "num_beds";
+        var dimension_axis = "price";
+        var sort_invert = false;
+
+        request_update();
 
           var $sw = $('#content'),
               $output = $('#output');
@@ -114,12 +141,19 @@
             if(last_rotation < -30 && last_rotation >= -180) {
               $sw.addClass("transposed-left");
               $output.prepend("left"+"<br/>");
-              updateData();
+              var temp = category_axis;
+              category_axis = dimension_axis;
+              dimension_axis = temp;
+              sort_invert = true;
+              update_data();
             }
             else if(last_rotation > 30 || last_rotation < -180) {
               $sw.addClass("transposed-right");
               $output.prepend("right"+"<br/>");
-              updateData();
+              category_axis = dimension_axis;
+              dimension_axis = temp;
+              sort_invert = false;
+              update_data();
             }
             else {
               $sw.addClass("not-transposed");
@@ -136,12 +170,45 @@
               $sw.off('tap');
           });*/
 
-        function updateData() {
+        function update_data() {
+          request_update();
           $sw.fadeOut(500, function() {
             $sw.removeClass("not-transposed transposed-left transposed-right");
-            $sw.fadeIn();
           });
         }
+
+        function set_data(response) {
+          var data = response.data;
+          console.log(data);
+
+          $ca = $("#category_axis");
+          $ca.html("");
+
+          $columns = $("#columns");
+          $columns.html("");
+
+          _(data).each(function(cat) {
+            $ca.append("<div class='cat'>"+cat.category_bucket+"</div>");
+            $column = $("<div class='col'></div>");
+            $columns.append($column);
+
+            _(cat.listings).each(function(listing) {
+              $column.append("<div class='listing'>"+
+                "<img src='"+listing.image_url+"'/>"+
+                "<h2>"+listing.title+"</h2>"+
+                "</div>"
+              )
+            });
+          });
+
+          $sw.fadeIn();
+        }
+
+        function request_update() {
+          console.log("request_update", category_axis, dimension_axis);
+          $.getJSON("http://10.10.10.27:1234/hack_data?country=uk&geoid=city_birmingham&category="+category_axis+"&dimension="+dimension_axis, set_data)
+        }
+
     </script>
 </body>
 </html>
