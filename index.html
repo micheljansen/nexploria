@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery special event API on hammerjs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="lib/hammer.js"></script>
+    <script src="lib/jquery.specialevent.hammer.js"></script>
+    <style>
+        #swipeme {
+            border: 3px dashed orange;
+            line-height: 300px;
+            height: 300px;
+            text-align: center;
+            font-size: 3em;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="swipeme">
+        Touch me :)
+    </div>
+    <div id="output">
+    </div>
+    <script>
+        (function ($) {
+            var $sw = $('#swipeme'),
+                $output = $('#output');
+
+                /*
+            $sw.on('hold tap swipe doubletap transformstart transform transformend dragstart drag dragend swipe release', function (event) {
+                //event.preventDefault();
+
+                $output.prepend("Type: " + event.type + ", Fingers: " + event.touches.length + ", Direction: " + event.direction + "<br/>");
+                console.log(event);
+            });
+            */
+
+            $sw.on('transform', function (event) {
+              $output.prepend("rotation: "+ event.rotation +"<br/>");
+              console.log(event);
+            });
+
+
+            // this is how you unbind an event
+            /*$sw.on('swipe', function (event) {
+                event.preventDefault();
+
+                $sw.off('tap');
+            });*/
+        }(jQuery));
+    </script>
+</body>
+</html>
