@@ -14,12 +14,21 @@
             text-align: center;
             font-size: 3em;
             width: 100%;
+            background: white;
+        }
+        #container {
+          width: 100%;
+          height: 100%;
+          background: #eee;
+          overflow: hidden;
         }
     </style>
 </head>
 <body>
-    <div id="swipeme">
-        Touch me :)
+    <div id="container">
+      <div id="swipeme">
+          Touch me :)
+      </div>
     </div>
     <div id="output">
     </div>
@@ -40,6 +49,7 @@
             $sw.on('transform', function (event) {
               $output.prepend("rotation: "+ event.rotation +"<br/>");
               console.log(event);
+              $sw.css("-webkit-transform", "rotateZ("+event.rotation+"deg)");
             });
 
 
