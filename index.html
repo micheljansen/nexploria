@@ -50,12 +50,13 @@
           white-space: nowrap;
           margin-left: 100px;
           background-color: #bbb;
+          width: 1000000;
         }
 
         .col {
           width: 200px;
           overflow: hidden;
-          display: inline-block;
+          float: left;
         }
 
         .listing {
@@ -101,7 +102,8 @@
 
         var category_axis = "num_beds";
         var dimension_axis = "price";
-        var sort_invert = false;
+        var invert_category = false;
+        var invert_dimension = false;
 
         request_update();
 
