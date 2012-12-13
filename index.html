@@ -146,7 +146,12 @@
               var temp = category_axis;
               category_axis = dimension_axis;
               dimension_axis = temp;
-              sort_invert = true;
+
+              var current_invert_dimension = invert_dimension
+              // rotating left inverts the order of the new dimension
+              invert_dimension = !invert_category;
+              // but the order of the new category is preserved
+              invert_category = current_invert_dimension;
               update_data();
             }
             else if(last_rotation > 30 || last_rotation < -180) {
@@ -154,7 +159,12 @@
               $output.prepend("right"+"<br/>");
               category_axis = dimension_axis;
               dimension_axis = temp;
-              sort_invert = false;
+
+              var current_invert_dimension = invert_dimension
+              // rotating right preserves order from category to dimension
+              invert_dimension = invert_category;
+              // but going from dimension to category inverts its order
+              invert_category = !current_invert_dimension;
               update_data();
             }
             else {
@@ -207,8 +217,13 @@
         }
 
         function request_update() {
-          console.log("request_update", category_axis, dimension_axis);
-          $.getJSON("http://10.10.10.27:1234/hack_data?country=uk&geoid=city_birmingham&category="+category_axis+"&dimension="+dimension_axis, set_data)
+          console.log("request_update", category_axis, invert_category, dimension_axis, invert_dimension);
+          $.getJSON("http://10.10.10.27:1234/hack_data?country=uk&geoid=city_birmingham"
+          +"&category="+category_axis
+          +"&dimension="+dimension_axis
+          +"&reverse="+(invert_dimension ? 1 : 0)
+          +"&reverse_category="+(invert_category ? 1 : 0)
+          , set_data)
         }
 
     </script>
