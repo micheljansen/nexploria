@@ -44,6 +44,18 @@
           color: white;
           line-height: 2em;
         }
+
+
+        .not-transposed {
+          -webkit-transform: rotateZ(0deg);
+        }
+
+        .transposed-left {
+          -webkit-transform: rotateZ(-90deg);
+        }
+        .transposed-right {
+          -webkit-transform: rotateZ(90deg);
+        }
     </style>
 </head>
 <body>
@@ -63,38 +75,73 @@
     <div id="output">
     </div>
     <script>
-        (function ($) {
-            var $sw = $('#content'),
-                $output = $('#output');
+        var is_transforming = false;
+        var last_rotation = 0;
 
-                /*
-            $sw.on('hold tap swipe doubletap transformstart transform transformend dragstart drag dragend swipe release', function (event) {
-                //event.preventDefault();
+          var $sw = $('#content'),
+              $output = $('#output');
 
-                $output.prepend("Type: " + event.type + ", Fingers: " + event.touches.length + ", Direction: " + event.direction + "<br/>");
-                console.log(event);
-            });
-            */
+          $sw.on('hold tap swipe doubletap transformstart transform transformend dragstart drag dragend swipe release', function (event) {
+              //event.preventDefault();
 
-            $sw.on('transform', function (event) {
-              $output.prepend("rotation: "+ event.rotation +"<br/>");
+              $output.prepend("Type: " + event.type + ", Fingers: " + event.touches.length + ", Direction: " + event.direction + "<br/>");
               console.log(event);
-              $sw.css("-webkit-transform", "rotateZ("+event.rotation+"deg)");
-            });
+          });
 
-            $sw.on('transformend', function(event) {
-              $output.prepend("transformend"+"<br/>");
-              console.log(event);
-            });
+          $sw.on('transform', function (event) {
+            is_transforming = true;
+            $output.prepend("rotation: "+ event.rotation +"<br/>");
+            console.log(event);
+            last_rotation = event.rotation;
+            $sw.css("-webkit-transform", "rotateZ("+event.rotation+"deg)");
+          });
+
+          $sw.on('transformstart', function(event) {
+            is_transforming = true;
+            $output.prepend("transformstart"+"<br/>");
+            console.log(event);
+            $sw.removeClass("not-transposed transposed-left transposed-right");
+          });
+
+          $sw.on('transformend touchend', function(event) {
+            if(!is_transforming) {
+              return;
+            }
+            is_transforming = false;
+            $output.prepend("transformend"+"<br/>");
+            console.log(event);
+
+            if(last_rotation < -30 && last_rotation >= -180) {
+              $sw.addClass("transposed-left");
+              $output.prepend("left"+"<br/>");
+              updateData();
+            }
+            else if(last_rotation > 30 || last_rotation < -180) {
+              $sw.addClass("transposed-right");
+              $output.prepend("right"+"<br/>");
+              updateData();
+            }
+            else {
+              $sw.addClass("not-transposed");
+              $output.prepend("abort"+"<br/>");
+            }
+            $sw.css("-webkit-transform", '');
+          });
 
 
-            // this is how you unbind an event
-            /*$sw.on('swipe', function (event) {
-                event.preventDefault();
+          // this is how you unbind an event
+          /*$sw.on('swipe', function (event) {
+              event.preventDefault();
 
-                $sw.off('tap');
-            });*/
-        }(jQuery));
+              $sw.off('tap');
+          });*/
+
+        function updateData() {
+          $sw.fadeOut(500, function() {
+            $sw.removeClass("not-transposed transposed-left transposed-right");
+            $sw.fadeIn();
+          });
+        }
     </script>
 </body>
 </html>
