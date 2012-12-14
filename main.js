@@ -214,3 +214,8 @@ function rotate_right() {
   invert_category = !current_invert_dimension;
   update_data();
 }
+
+
+$(".nest-img").click(function() {
+  rotate_left();
+});
