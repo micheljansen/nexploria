@@ -61,6 +61,7 @@ $sw.on('transformend touchend', function(event) {
   else if(last_rotation > 30 || last_rotation < -180) {
     $sw.addClass("transposed-right");
     $output.prepend("right"+"<br/>");
+    var temp = category_axis;
     category_axis = dimension_axis;
     dimension_axis = temp;
 
