@@ -88,6 +88,11 @@ $sw.on('transformend touchend', function(event) {
 // transpose interaction //
 ///////////////////////////
 
+$ca.on('touchmove', function(event) {
+  // prevent scrolling while transforming
+  event.preventDefault();
+});
+
 $ca.on('drag', function(event) {
   if(event.direction == "down") {
     var dY = event.distanceY;
