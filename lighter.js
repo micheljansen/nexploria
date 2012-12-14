@@ -6,13 +6,15 @@ function spark(url, title) {
     $detailframe.attr("src", url);
     $(".details").append($detailframe);
     $(".details").dialog({
-        height: ($(window).height() * 0.85),
-        width: ($(window).width() * 0.85),
+        height: ($(window).height() * 0.9),
+        width: ($(window).width() * 0.9),
         modal: true,
         buttons: {
             Ok: function() {
+                $(".dimg").hide();
                 $(this).dialog("close");
             }
         }
     });
+    $(".dimg").show();
 }
