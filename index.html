@@ -47,10 +47,20 @@
         }
 
         #columns {
-          white-space: nowrap;
+          width: 6000px;
+          height: 6000px;
+        }
+
+        #data {
+          position: absolute;
+          top: 20px;
+          bottom: 0;
+          left: 0;
+          right: 0;
           margin-left: 100px;
           background-color: #bbb;
-          width: 1000000;
+          overflow: scroll;
+          -webkit-overflow-scrolling: touch;
         }
 
         .col {
@@ -104,7 +114,9 @@
     <div id="container">
       <div id="content">
         <div id="category_axis"></div>
-        <div id="columns"></div>
+        <div id="data">
+          <div id="columns"></div>
+        </div>
       </div>
     </div>
     <div id="output">
@@ -113,8 +125,8 @@
         var is_transforming = false;
         var last_rotation = 0;
 
-        var category_axis = "num_beds";
-        var dimension_axis = "price";
+        var category_axis = "price";
+        var dimension_axis = "num_beds";
         var invert_category = false;
         var invert_dimension = false;
 
@@ -123,12 +135,14 @@
           var $sw = $('#content'),
               $output = $('#output');
 
+              /*
           $sw.on('hold tap swipe doubletap transformstart transform transformend dragstart drag dragend swipe release', function (event) {
               //event.preventDefault();
 
               $output.prepend("Type: " + event.type + ", Fingers: " + event.touches.length + ", Direction: " + event.direction + "<br/>");
               console.log(event);
           });
+          */
 
           $sw.on('transform', function (event) {
             is_transforming = true;
@@ -139,6 +153,7 @@
           });
 
           $sw.on('transformstart', function(event) {
+            event.preventDefault();
             is_transforming = true;
             $output.prepend("transformstart"+"<br/>");
             console.log(event);
@@ -239,6 +254,7 @@
           +"&dimension="+dimension_axis
           +"&reverse="+(invert_dimension ? 1 : 0)
           +"&reverse_category="+(invert_category ? 1 : 0)
+          +"&max_bucketsize=25"
           , set_data)
         }
 
