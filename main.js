@@ -76,15 +76,22 @@ $cia.on('touchmove', function(event) {
   event.preventDefault();
 });
 
+$nd = $("#next_dimension");
+$cur = $("#current");
+
 $cia.on('drag', function(event) {
   if(event.direction == "down") {
     var dY = event.distanceY;
     console.log(dY);
-    $sw.css("-webkit-transform", "rotateX("+dY+"deg)");
+    // $nd.css("-webkit-transform", "rotateX("+(90-Math.min(90,dY/2.0))+"deg)");
+    // $cur.css("-webkit-transform", "rotateX("+(90-Math.min(90,dY/2.0))+"deg)");
+    $sw.css("-webkit-transform", "rotateX("+(-Math.min(90,dY/4.0))+"deg)");
   }
 });
 
 $cia.on('dragend', function(event) {
+  // $nd.css("-webkit-transform", "");
+  // $cur.css("-webkit-transform", "");
   $sw.css("-webkit-transform", "");
 });
 
@@ -121,9 +128,6 @@ function update_data() {
 }
 
 function set_data(response) {
-  $sw.fadeOut(500, function() {
-    $sw.removeClass("not-transposed transposed-left transposed-right");
-  });
   var data = response.data;
   console.log(data);
 
@@ -134,8 +138,11 @@ function set_data(response) {
   $columns.html("");
 
   $("#category_title").html(category_axis);
-  $("#left_category_title").html(dimension_axis);
   $("#dimension_title").html(dimension_axis);
+  $("#left .category-title").html(dimension_axis);
+  $("#left .dimension-title").html(category_axis);
+  $("#right .category-title").html(dimension_axis);
+  $("#right .dimension-title").html(category_axis);
 
   _(data).each(function(cat) {
     $ca.append("<div class='cat'>"+cat.category_bucket+"</div>");
@@ -162,7 +169,7 @@ function set_data(response) {
   // manually set width so floats fit
   $columns.css("width", data.length*200+"px");
 
-  $sw.fadeIn();
+  $sw.removeClass("not-transposed transposed-left transposed-right");
 }
 
 function request_update() {

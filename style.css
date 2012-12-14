@@ -4,7 +4,38 @@
   background: white;
   font-family: Helvetica, sans-serif;
   -webkit-transform-origin: 0% 0%;
+  -webkit-transform-style: preserve-3d;
 }
+
+#left, #right, #next_dimension {
+  -webkit-transform-origin: 0% 0%;
+  height: 2000px;
+  width: 2000px;
+  background: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#current {
+  -webkit-transform-origin: 0% 0%;
+}
+#left {
+  -webkit-transform: rotateZ(90deg);
+}
+
+#right {
+  -webkit-transform: rotateZ(-90deg);
+}
+
+#next_dimension {
+  -webkit-transform: rotateX(90deg);
+  background: red;
+  height: 768px;
+  border-bottom: 4px solid black;
+  overflow: hidden;
+}
+
 #container {
   position: absolute;
   top: 0;
@@ -25,7 +56,7 @@
   display: none;
 }
 
-#category_axis {
+.category-axis {
   position: relative;
   white-space: nowrap;
   margin-left: 64px;
@@ -54,7 +85,7 @@
 #category_headers {
   display: inline-block;
 }
-#category_title {
+.category-title {
   position: absolute;
   top: 0;
   line-height: 32px;
@@ -68,19 +99,19 @@
   width: 200px;
 }
 
-#dimension_axis {
+.dimension-axis {
   position: absolute;
-  left: -64px;
+  left: 0;
   top: 0;
   bottom: 0;
-  width: 128px;
+  width: 64px;
   font-size: 20px;
   background: #332;
   color: white;
   height: 2000px;
 }
 
-#dimension_title {
+.dimension-title {
   -webkit-transform-origin: 100% 100%;
   -webkit-transform: rotateZ(-90deg);
   position: absolute;

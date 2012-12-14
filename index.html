@@ -8,24 +8,41 @@
     <script src="lib/hammer.js"></script>
     <script src="lib/jquery.specialevent.hammer.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
-    <link rel="stylesheet" href="style.css"/>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
     <div id="container">
       <div id="content">
-        <div id="category_axis"><div id="category_title"></div>
-          <div id="category_header_container"><div id="category_headers"></div></div>
+        <div id="current">
+          <div id="category_axis" class="category-axis"><div id="category_title" class='category-title'></div>
+            <div id="category_header_container"><div id="category_headers"></div></div>
+          </div>
+
+          <div id="dimension_axis" class="dimension-axis">
+            <div id="dimension_title" class="dimension-title"></div>
+          </div>
+
+          <div id="data">
+            <div id="columns"></div>
+          </div>
         </div>
 
-        <div id="dimension_axis">
-          <div id="dimension_title"></div>
-          <div id="left_category_title"></div>
+        <div id="left">
+          <div class="category-axis"><div class="category-title">left-category</div></div>
+          <div id="dimension_axis" class="dimension-axis"><div class="dimension-title">left-dimension</div></div>
         </div>
 
-        <div id="data">
-          <div id="columns"></div>
+        <div id="right">
+          <div class="category-axis"><div class="category-title">left-category</div></div>
+          <div id="dimension_axis" class="dimension-axis"><div class="dimension-title">left-dimension</div></div>
         </div>
+
+        <div id="next_dimension">
+          <div class="category-axis"><div class="category-title">left-category</div></div>
+          <div id="dimension_axis" class="dimension-axis"><div class="dimension-title">left-dimension</div></div>
+        </div>
+
       </div>
     </div>
     <div id="output">
