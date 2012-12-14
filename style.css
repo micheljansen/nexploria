@@ -183,9 +183,11 @@
 }
 
 .transposed-left {
+  -webkit-transition: -webkit-transform 0.5s;
   -webkit-transform: rotateZ(-90deg);
 }
 .transposed-right {
+  -webkit-transition: -webkit-transform 0.5s;
   -webkit-transform: rotateZ(90deg);
 }
 
