@@ -1,8 +1,10 @@
 
 function spark(url, title) {
+    $(".detailframe").remove();
+    $detailframe = $("<iframe class='detailframe'></iframe>");
     $(".details").attr("title", title);
-    $(".detailframe").attr("src", "");
-    $(".detailframe").attr("src", url);
+    $detailframe.attr("src", url);
+    $(".details").append($detailframe);
     $(".details").dialog({
         height: ($(window).height() * 0.85),
         width: ($(window).width() * 0.85),
