@@ -25,6 +25,7 @@
 }
 
 #category_axis {
+  position: relative;
   white-space: nowrap;
   margin-left: 64px;
   background: #332;
@@ -32,10 +33,21 @@
   color: white;
 }
 #category_header_container {
+  position: absolute;
+  top: 32px;
+  height: 32px;
   display: inline-block;
   white-space: nowrap;
   background: #332;
   color: white;
+  -webkit-transition: opacity 1s;
+}
+
+#category_header_container.hidden {
+  -webkit-transition: opacity 0;
+  opacity: 0;
+}
+#category_header_container.animated {
 }
 #category_headers {
   display: inline-block;
@@ -80,7 +92,7 @@
 
 #data {
   position: absolute;
-  top: 32px;
+  top: 64px;
   bottom: 0;
   left: 0;
   right: 0;
