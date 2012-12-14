@@ -1,6 +1,6 @@
 var is_transforming = false;
 var last_rotation = 0;
-var drag_in_progress = false;
+var drag_dimension = false;
 var category_drag = 0;
 
 var category_axis = "price";
@@ -84,6 +84,7 @@ $nd = $("#next_dimension");
 $cur = $("#current");
 
 $cia.on('drag', function(event) {
+  drag_dimension = true;
   if(event.direction == "down") {
     var dY = event.distanceY;
     console.log(dY);
@@ -99,6 +100,12 @@ $cia.on('drag', function(event) {
 });
 
 $cia.on('dragend', function(event) {
+  // prevent duplicate
+  if(!drag_dimension) {
+    return;
+  }
+  drag_dimension = false;
+
   // $nd.css("-webkit-transform", "");
   // $cur.css("-webkit-transform", "");
   if(category_drag > 40) {
@@ -160,6 +167,8 @@ function set_data(response) {
   $("#left .dimension-title").html(category_axis);
   $("#right .category-title").html(dimension_axis);
   $("#right .dimension-title").html(category_axis);
+  $("#next_dimension .category-title").html(category_axis);
+  $("#next_dimension .dimension-title").html(other_dimension());
 
   _(data).each(function(cat) {
     $ca.append("<div class='cat'>"+cat.category_bucket+"</div>");
@@ -239,7 +248,10 @@ function next_dimension() {
   console.log("next dimension");
   $sw.addClass("next-dimension");
 
-  var temp = dimension_axis;
+  var next_dimension = other_dimension();
+  console.log("next dimension: ",next_dimension);
+  dimension_axis = next_dimension;
+  request_update();
 }
 
 
@@ -254,3 +266,10 @@ $("#loading").on('webkitTransitionEnd',function( event ) {
     $("#loading").hide();
   }
 });
+
+function other_dimension() {
+  return _(dimensions).chain()
+                        .without(dimension_axis)
+                        .without(category_axis).value()[0];
+
+}
