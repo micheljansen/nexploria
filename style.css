@@ -262,3 +262,12 @@
   position: relative;
   top: 200px;
 }
+
+.rotate-left {
+  background: url("images/rotate-left.svg");
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

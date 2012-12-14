@@ -218,7 +218,7 @@ function rotate_right() {
 }
 
 
-$(".nest-img").click(function() {
+$(".rotate-left").click(function() {
   rotate_left();
 });
 
