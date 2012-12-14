@@ -3,6 +3,7 @@
   width: 100%;
   background: white;
   font-family: Helvetica, sans-serif;
+  -webkit-transform-origin: 0% 0%;
 }
 #container {
   position: absolute;
