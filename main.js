@@ -1,5 +1,6 @@
 var is_transforming = false;
 var last_rotation = 0;
+var drag_in_progress = false;
 
 var category_axis = "price";
 var dimension_axis = "num_beds";
@@ -84,8 +85,9 @@ $sw.on('transformend touchend', function(event) {
   $sw.css("-webkit-transform", '');
 });
 
+
 ///////////////////////////
-// transpose interaction //
+// flip axis interaction //
 ///////////////////////////
 
 // allow both the axis and the header to be used to initiate gestures
@@ -107,6 +109,26 @@ $cia.on('drag', function(event) {
 $cia.on('dragend', function(event) {
   $sw.css("-webkit-transform", "");
 });
+
+
+// update the header location after scrolling
+$cht = $("#category_header_container");
+$data = $("#data");
+
+var scroll_timer;
+
+$data.on("touchmove scroll", function() {
+  $cht.css("left", -$data.scrollLeft());
+});
+
+function sync_header_scroll() {
+}
+
+function header_syncing() {
+  return typeof scroll_timer === "undefined";
+}
+
+
 
 
 // this is how you unbind an event
