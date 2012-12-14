@@ -88,12 +88,15 @@ $sw.on('transformend touchend', function(event) {
 // transpose interaction //
 ///////////////////////////
 
-$ca.on('touchmove', function(event) {
+// allow both the axis and the header to be used to initiate gestures
+$cia = $("#category_axis, #category_header_container");
+
+$cia.on('touchmove', function(event) {
   // prevent scrolling while transforming
   event.preventDefault();
 });
 
-$ca.on('drag', function(event) {
+$cia.on('drag', function(event) {
   if(event.direction == "down") {
     var dY = event.distanceY;
     console.log(dY);
@@ -101,7 +104,7 @@ $ca.on('drag', function(event) {
   }
 });
 
-$ca.on('dragend', function(event) {
+$cia.on('dragend', function(event) {
   $sw.css("-webkit-transform", "");
 });
 
