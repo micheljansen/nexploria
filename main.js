@@ -142,7 +142,7 @@ function set_data(response) {
     $columns.append($column);
 
     _(cat.listings).each(function(listing) {
-      $column.append("<div class='listing'>"+
+      $column.append("<div class='listing' data-url='"+listing.site_url+"' data-title='"+listing.title+"'>"+
         "<div class='img-wrapper'>"+
         "<img src='"+listing.image_url+"'/>"+
         "<span class='price'>"+listing.price+"</span>"+
@@ -150,6 +150,11 @@ function set_data(response) {
         "<h2>"+listing.title+"</h2>"+
         "</div>"
       )
+    });
+    $(".listing").each(function(idx,listing) {
+        $(listing).click(function(){
+            spark($(this).data("url"), $(this).data("title"));
+        });
     });
   });
 
