@@ -125,6 +125,7 @@ function set_data(response) {
 
 function request_update() {
   console.log("request_update", category_axis, invert_category, dimension_axis, invert_dimension);
+  /*
   $.getJSON("http://10.10.10.27:1234/hack_data?country=uk&geoid=city_birmingham"
   +"&category="+category_axis
   +"&dimension="+dimension_axis
@@ -132,6 +133,8 @@ function request_update() {
   +"&reverse_category="+(invert_category ? 1 : 0)
   +"&max_bucketsize=25"
   , set_data)
+  */
+  $.getJSON("test.json", set_data);
 }
 
 
