@@ -97,11 +97,14 @@ function set_data(response) {
   var data = response.data;
   console.log(data);
 
-  $ca = $("#category_axis");
+  $ca = $("#category_headers");
   $ca.html("");
 
   $columns = $("#columns");
   $columns.html("");
+
+  $("#category_title").html(category_axis);
+  $("#dimension_title").html(dimension_axis);
 
   _(data).each(function(cat) {
     $ca.append("<div class='cat'>"+cat.category_bucket+"</div>");
@@ -120,10 +123,14 @@ function set_data(response) {
     });
   });
 
+  // manually set width so floats fit
+  $columns.css("width", $("#category_headers").width());
+
   $sw.fadeIn();
 }
 
 function request_update() {
+
   console.log("request_update", category_axis, invert_category, dimension_axis, invert_dimension);
   /*
   $.getJSON("http://10.10.10.27:1234/hack_data?country=uk&geoid=city_birmingham"

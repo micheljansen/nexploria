@@ -25,15 +25,46 @@
 
 #category_axis {
   white-space: nowrap;
-  margin-left: 100px;
+  margin-left: 64px;
+  background: #332;
+  height: 64px;
+  color: white;
+}
+#category_headers {
+  display: inline-block;
+  margin-top: 32px;
+}
+#category_title {
+  position: absolute;
+  top: 0;
+  line-height: 32px;
+  font-size: 20px;
+  padding-left: .5em;
 }
 .cat {
   text-align: center;
   display: inline-block;
-  background: #332;
   line-height: 2em;
-  color: white;
   width: 200px;
+}
+
+#dimension_axis {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 64px;
+  font-size: 20px;
+  background: #332;
+  color: white;
+}
+
+#dimension_title {
+  -webkit-transform: rotateZ(-90deg);
+  position: absolute;
+  top: 120px;
+  left: 0;
+  margin-left: -16px;
 }
 
 #columns {
@@ -43,11 +74,11 @@
 
 #data {
   position: absolute;
-  top: 20px;
+  top: 64px;
   bottom: 0;
   left: 0;
   right: 0;
-  margin-left: 100px;
+  margin-left: 64px;
   background-color: #bbb;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
