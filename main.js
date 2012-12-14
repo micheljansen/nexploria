@@ -51,32 +51,10 @@ $sw.on('transformend touchend', function(event) {
   console.log(event);
 
   if(last_rotation < -30 && last_rotation >= -180) {
-    $sw.addClass("transposed-left");
-    $output.prepend("left"+"<br/>");
-    var temp = category_axis;
-    category_axis = dimension_axis;
-    dimension_axis = temp;
-
-    var current_invert_dimension = invert_dimension
-    // rotating left inverts the order of the new dimension
-    invert_dimension = !invert_category;
-    // but the order of the new category is preserved
-    invert_category = current_invert_dimension;
-    update_data();
+    rotate_left();
   }
   else if(last_rotation > 30 || last_rotation < -180) {
-    $sw.addClass("transposed-right");
-    $output.prepend("right"+"<br/>");
-    var temp = category_axis;
-    category_axis = dimension_axis;
-    dimension_axis = temp;
-
-    var current_invert_dimension = invert_dimension
-    // rotating right preserves order from category to dimension
-    invert_dimension = invert_category;
-    // but going from dimension to category inverts its order
-    invert_category = !current_invert_dimension;
-    update_data();
+    rotate_right();
   }
   else {
     $sw.addClass("not-transposed");
@@ -140,12 +118,12 @@ function header_syncing() {
 
 function update_data() {
   request_update();
-  $sw.fadeOut(500, function() {
-    $sw.removeClass("not-transposed transposed-left transposed-right");
-  });
 }
 
 function set_data(response) {
+  $sw.fadeOut(500, function() {
+    $sw.removeClass("not-transposed transposed-left transposed-right");
+  });
   var data = response.data;
   console.log(data);
 
@@ -201,3 +179,31 @@ function request_update() {
 }
 
 
+function rotate_left() {
+  $sw.addClass("transposed-left");
+  var temp = category_axis;
+  category_axis = dimension_axis;
+  dimension_axis = temp;
+
+  var current_invert_dimension = invert_dimension
+  // rotating left inverts the order of the new dimension
+  invert_dimension = !invert_category;
+  // but the order of the new category is preserved
+  invert_category = current_invert_dimension;
+  update_data();
+}
+
+function rotate_right() {
+  $sw.addClass("transposed-right");
+  $output.prepend("right"+"<br/>");
+  var temp = category_axis;
+  category_axis = dimension_axis;
+  dimension_axis = temp;
+
+  var current_invert_dimension = invert_dimension
+  // rotating right preserves order from category to dimension
+  invert_dimension = invert_category;
+  // but going from dimension to category inverts its order
+  invert_category = !current_invert_dimension;
+  update_data();
+}
