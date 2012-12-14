@@ -7,6 +7,16 @@
   -webkit-transform-style: preserve-3d;
 }
 
+/* special state that indicates loading next dimension */
+#content.next-dimension {
+  -webkit-transform: rotateX(-90deg);
+}
+
+#current {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 #left, #right, #next_dimension {
   -webkit-transform-origin: 0% 0%;
   height: 2000px;
@@ -30,7 +40,6 @@
 
 #next_dimension {
   -webkit-transform: rotateX(90deg);
-  background: red;
   height: 768px;
   border-bottom: 4px solid black;
   overflow: hidden;

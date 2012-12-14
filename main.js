@@ -1,11 +1,15 @@
 var is_transforming = false;
 var last_rotation = 0;
 var drag_in_progress = false;
+var category_drag = 0;
 
 var category_axis = "price";
 var dimension_axis = "num_beds";
 var invert_category = false;
 var invert_dimension = false;
+
+
+var dimensions = ["price", "num_beds", "num_baths"];
 
 request_update();
 
@@ -83,16 +87,29 @@ $cia.on('drag', function(event) {
   if(event.direction == "down") {
     var dY = event.distanceY;
     console.log(dY);
+    category_drag = dY;
     // $nd.css("-webkit-transform", "rotateX("+(90-Math.min(90,dY/2.0))+"deg)");
     // $cur.css("-webkit-transform", "rotateX("+(90-Math.min(90,dY/2.0))+"deg)");
     $sw.css("-webkit-transform", "rotateX("+(-Math.min(90,dY/4.0))+"deg)");
+    $cur.css("height", $(window).height());
+    $cur.css("overflow", "hidden");
+    $nd.css("height", $(window).height());
+    $nd.css("overflow", "hidden");
   }
 });
 
 $cia.on('dragend', function(event) {
   // $nd.css("-webkit-transform", "");
   // $cur.css("-webkit-transform", "");
+  if(category_drag > 40) {
+    next_dimension();
+  }
+  // reset everything
   $sw.css("-webkit-transform", "");
+  $cur.css("height", "");
+  $cur.css("overflow", "");
+  $nd.css("height", "");
+  $nd.css("overflow", "");
 });
 
 
@@ -169,7 +186,7 @@ function set_data(response) {
   // manually set width so floats fit
   $columns.css("width", data.length*200+"px");
 
-  $sw.removeClass("not-transposed transposed-left transposed-right");
+  $sw.removeClass("not-transposed transposed-left transposed-right next-dimension");
   $("#loading").css("opacity", "0");
 }
 
@@ -215,6 +232,14 @@ function rotate_right() {
   // but going from dimension to category inverts its order
   invert_category = !current_invert_dimension;
   update_data();
+}
+
+
+function next_dimension() {
+  console.log("next dimension");
+  $sw.addClass("next-dimension");
+
+  var temp = dimension_axis;
 }
 
 
