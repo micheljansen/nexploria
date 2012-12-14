@@ -170,10 +170,12 @@ function set_data(response) {
   $columns.css("width", data.length*200+"px");
 
   $sw.removeClass("not-transposed transposed-left transposed-right");
+  $("#loading").css("opacity", "0");
 }
 
 function request_update() {
-
+  $("#loading").show();
+  $("#loading").css("opacity", "1");
   console.log("request_update", category_axis, invert_category, dimension_axis, invert_dimension);
   $.getJSON("http://10.10.10.27:1234/hack_data?country=uk&geoid=city_birmingham"
   +"&category="+category_axis
@@ -218,4 +220,12 @@ function rotate_right() {
 
 $(".nest-img").click(function() {
   rotate_left();
+});
+
+
+$("#loading").on('webkitTransitionEnd',function( event ) {
+  var opacity = parseInt($("#loading").css("opacity"));
+  if(opacity < 0.5) {
+    $("#loading").hide();
+  }
 });

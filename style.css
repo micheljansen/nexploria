@@ -242,3 +242,23 @@
     top:0;
     left:0;
 }
+
+#loading {
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background: rgba(0,0,0,0.2);
+  -webkit-transition: opacity 0.5s;
+  text-align: center;
+  color: white;
+  font-size: 3em;
+  font-family: Helvetica, sans-serif;
+  opacity: 0;
+}
+
+#loading .msg {
+  position: relative;
+  top: 200px;
+}
