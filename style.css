@@ -211,3 +211,8 @@ background: linear-gradient(to bottom, #606060 0%,#494949 47%,#333322 99%); /* W
 .ui-dialog .ui-dialog-content {
   -webkit-overflow-scrolling: touch;
 }
+.nest-img {
+    position:absolute;
+    top:0;
+    left:0;
+}
