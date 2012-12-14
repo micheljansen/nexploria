@@ -171,3 +171,7 @@
     border:0;
     overflow-x: hidden;
 }
+
+.ui-dialog .ui-dialog-content {
+  -webkit-overflow-scrolling: touch;
+}
