@@ -11,6 +11,7 @@ request_update();
 var $sw = $('#content'),
     $output = $('#output');
 
+$ca = $("#category_axis");
     /*
 $sw.on('hold tap swipe doubletap transformstart transform transformend dragstart drag dragend swipe release', function (event) {
     //event.preventDefault();
@@ -19,6 +20,10 @@ $sw.on('hold tap swipe doubletap transformstart transform transformend dragstart
     console.log(event);
 });
 */
+
+///////////////////////////
+// transpose interaction //
+///////////////////////////
 
 $sw.on('transform', function (event) {
   is_transforming = true;
@@ -79,6 +84,22 @@ $sw.on('transformend touchend', function(event) {
   $sw.css("-webkit-transform", '');
 });
 
+///////////////////////////
+// transpose interaction //
+///////////////////////////
+
+$ca.on('drag', function(event) {
+  if(event.direction == "down") {
+    var dY = event.distanceY;
+    console.log(dY);
+    $sw.css("-webkit-transform", "rotateX("+dY+"deg)");
+  }
+});
+
+$ca.on('dragend', function(event) {
+  $sw.css("-webkit-transform", "");
+});
+
 
 // this is how you unbind an event
 /*$sw.on('swipe', function (event) {
@@ -125,7 +146,7 @@ function set_data(response) {
   });
 
   // manually set width so floats fit
-  $columns.css("width", $("#category_headers").width());
+  $columns.css("width", data.length*200+"px");
 
   $sw.fadeIn();
 }
@@ -133,7 +154,6 @@ function set_data(response) {
 function request_update() {
 
   console.log("request_update", category_axis, invert_category, dimension_axis, invert_dimension);
-  /*
   $.getJSON("http://10.10.10.27:1234/hack_data?country=uk&geoid=city_birmingham"
   +"&category="+category_axis
   +"&dimension="+dimension_axis
@@ -141,8 +161,7 @@ function request_update() {
   +"&reverse_category="+(invert_category ? 1 : 0)
   +"&max_bucketsize=25"
   , set_data)
-  */
-  $.getJSON("test.json", set_data);
+  // $.getJSON("test.json", set_data);
 }
 
 

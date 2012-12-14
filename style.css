@@ -21,18 +21,24 @@
   height: 25%;
   background: rgba(255,255,255,0.4);
   padding-left: 40px;
+  display: none;
 }
 
 #category_axis {
   white-space: nowrap;
   margin-left: 64px;
   background: #332;
-  height: 64px;
+  height: 32px;
+  color: white;
+}
+#category_header_container {
+  display: inline-block;
+  white-space: nowrap;
+  background: #332;
   color: white;
 }
 #category_headers {
   display: inline-block;
-  margin-top: 32px;
 }
 #category_title {
   position: absolute;
@@ -74,7 +80,7 @@
 
 #data {
   position: absolute;
-  top: 64px;
+  top: 32px;
   bottom: 0;
   left: 0;
   right: 0;
