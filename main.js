@@ -156,6 +156,7 @@ function set_data(response) {
   $columns.html("");
 
   $("#category_title").html(category_axis);
+  $("#left_category_title").html(dimension_axis);
   $("#dimension_title").html(dimension_axis);
 
   _(data).each(function(cat) {

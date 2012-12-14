@@ -32,6 +32,7 @@
   background: #332;
   height: 64px;
   color: white;
+  overflow:hidden;
 }
 #category_header_container {
   position: absolute;
@@ -69,21 +70,30 @@
 
 #dimension_axis {
   position: absolute;
-  left: 0;
+  left: -64px;
   top: 0;
   bottom: 0;
-  width: 64px;
+  width: 128px;
   font-size: 20px;
   background: #332;
   color: white;
 }
 
 #dimension_title {
+  -webkit-transform-origin: 100% 100%;
   -webkit-transform: rotateZ(-90deg);
   position: absolute;
   top: 120px;
+  right: 0;
+  line-height: 32px;
+}
+#left_category_title {
+  -webkit-transform-origin: 0% 100%;
+  -webkit-transform: rotateZ(90deg);
+  position: absolute;
+  top: 120px;
   left: 0;
-  margin-left: -16px;
+  line-height: 32px;
 }
 
 #columns {
